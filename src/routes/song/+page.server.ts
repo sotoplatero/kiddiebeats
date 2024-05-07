@@ -8,21 +8,22 @@ export const actions = {
         const formData = await request.formData()
         const url = formData.get("url")
 
-        const {content, title} = await extract(url)
+        const { content, title } = await extract(url)
 
         const chat = await openai.chat.completions.create({
             model:"gpt-3.5-turbo",
-            messages:[{"role": "user", "content": `Escribe la letra para una canción de salsa tomando el siguiente texto como referencia:\n\n ${content}`}]
+            messages:[{"role": "user", "content": `Hazme un resumen de 1200 caracteres:\n\n ${content}`}]
         })
 
         const lyric = chat.choices[0].message.content;
-        const prompt = `Cuban son song with the following lyrics:\n ${lyric}`
+        // const prompt = `Cuban son song with the following lyrics:\n ${lyric}`
 
         const tags = 'son cubano'
-        const make_instrumental = false
-        const wait_audio = false
-        const tasks = await (await sunoApi).custom_generate( lyric, tags, title, make_instrumental, wait_audio )
+        const instrumental = false
+        const wait_audio = true
+        const audios = await (await sunoApi).custom_generate( lyric, tags, title, instrumental, wait_audio )
+        // console.log(audios)
 
-        return { tasks }
+        return { audios }
 	},
 } satisfies Actions;
