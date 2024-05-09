@@ -20,7 +20,8 @@
 	} 
 
     $: console.log(form )
-
+    $: form?.audios?.length && wait()
+     
     const wait = async () => {
         const startTime = Date.now();
         let lastResponse: AudioInfo[] = [];
@@ -47,10 +48,10 @@
         <div class="label">Name</div>
         <input type="text" name="name" class="input input-bordered w-full" value="Diago" >
     </label>
-    <label class="form-control w-full">
+    <!-- <label class="form-control w-full">
         <div class="label">Birthdate</div>
         <input type="text" name="birthdate" class="input input-bordered w-full" value="16 de mayo de 2018">
-    </label>
+    </label> -->
     <label class="form-control w-full">
         <div class="label">Bio</div>
         <input type="text" name="quotes" class="input input-bordered w-full" value="travieso">

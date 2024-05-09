@@ -7,7 +7,7 @@ export const actions = {
 	default: async ({request}) => {
         const formData = await request.formData()
         const name = formData.get("name")
-        const birthdate = formData.get("birthdate")
+        // const birthdate = formData.get("birthdate")
         const quotes = formData.get("quotes")
 
         // const { content, title } = await extract(url)
