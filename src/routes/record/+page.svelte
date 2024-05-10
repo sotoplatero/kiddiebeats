@@ -1,8 +1,8 @@
 <script lang="ts">
     import { enhance, applyAction } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
-    import { sleep } from '$lib'
-    import type { AudioInfo } from '$lib'
+    import { sleep } from '$lib/utils'
+    import type { AudioInfo } from '$lib/utils'
 	
 	export let data: PageData;
 	
