@@ -19,14 +19,14 @@
 		};
 	} 
 
-    $: console.log(form )
+    $: form?.audios?.length && wait
 
     const wait = async () => {
         const startTime = Date.now();
         let lastResponse: AudioInfo[] = [];
 
         while (Date.now() - startTime < 100000) {
-            const audioIds = audios.map( a=>a.id )
+            const audioIds = form?.audios.map( a=>a.id )
             const response = await fetch(`/audio?id=${audioIds}`);
 
             lastResponse = await response.json()
@@ -34,7 +34,10 @@
                 audio => audio.status === 'streaming' && audio.status === 'complete'
             );
 
-            if (allCompleted) break;
+            if (allCompleted) {
+                break
+            };
+
             await sleep(3, 6);
         }
         audios = lastResponse;
@@ -46,10 +49,6 @@
     <label class="form-control w-full">
         <div class="label">Name</div>
         <input type="text" name="name" class="input input-bordered w-full" value="Diago" >
-    </label>
-    <label class="form-control w-full">
-        <div class="label">Birthdate</div>
-        <input type="text" name="birthdate" class="input input-bordered w-full" value="16 de mayo de 2018">
     </label>
     <label class="form-control w-full">
         <div class="label">Bio</div>
@@ -64,12 +63,9 @@
 <div class="space-x-2">
     <span class="loading loading-dots loading-xs"></span>
     <span>Recording...</span>
-
 </div>
     
 {/if}
-{#if form?.audios?.length}
-<audio controls src={form.audios[0].audio_url}></audio>
-<audio controls src={`/audio/${form.audios[0].id}.mp3`}></audio>
-
-{/if}
+#{#each form?.audios as audio}
+    <audio controls src={audio.audio_url}></audio>
+{/each}
