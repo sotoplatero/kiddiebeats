@@ -4,27 +4,10 @@ import pino from 'pino';
 import { wrapper } from "axios-cookiejar-support";
 import { CookieJar } from "tough-cookie";
 import { sleep } from "./utils";
+import type { AudioInfo } from "./utils";
 import {SUNO_COOKIE} from '$env/static/private'
 
 const logger = pino();
-
-
-export interface AudioInfo {
-  id: string; // Unique identifier for the audio
-  title?: string; // Title of the audio
-  image_url?: string; // URL of the image associated with the audio
-  lyric?: string; // Lyrics of the audio
-  audio_url?: string; // URL of the audio file
-  video_url?: string; // URL of the video associated with the audio
-  created_at: string; // Date and time when the audio was created
-  model_name: string; // Name of the model used for audio generation
-  gpt_description_prompt?: string; // Prompt for GPT description
-  prompt?: string; // Prompt for audio generation
-  status: string; // Status
-  type?: string;
-  tags?: string; // Genre of music.
-  duration?: string; // Duration of the audio
-}
 
 class SunoApi {
   private static BASE_URL: string = 'https://studio-api.suno.ai';
