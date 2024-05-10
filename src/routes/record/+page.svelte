@@ -1,8 +1,8 @@
 <script lang="ts">
     import { enhance, applyAction } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
-    import type { AudioInfo } from '$lib';
-    import { sleep } from '$lib'+
+    // import type { AudioInfo } from '$lib';
+    // import { sleep } from '$lib'
 	
 	export let data: PageData;
 	
@@ -20,26 +20,25 @@
 	} 
 
     $: console.log(form )
-    $: form?.audios?.length && wait()
-     
-    const wait = async () => {
-        const startTime = Date.now();
-        let lastResponse: AudioInfo[] = [];
 
-        while (Date.now() - startTime < 100000) {
-            const audioIds = audios.map( a=>a.id )
-            const response = await fetch(`/audio?id=${audioIds}`);
+    // const wait = async () => {
+    //     const startTime = Date.now();
+    //     let lastResponse: AudioInfo[] = [];
 
-            lastResponse = await response.json()
-            const allCompleted = lastResponse.every(
-                audio => audio.status === 'streaming' || audio.status === 'complete'
-            );
+    //     while (Date.now() - startTime < 100000) {
+    //         const audioIds = audios.map( a=>a.id )
+    //         const response = await fetch(`/audio?id=${audioIds}`);
 
-            if (allCompleted) break;
-            await sleep(3, 6);
-        }
-        audios = lastResponse;
-    }
+    //         lastResponse = await response.json()
+    //         const allCompleted = lastResponse.every(
+    //             audio => audio.status === 'streaming' || audio.status === 'complete'
+    //         );
+
+    //         if (allCompleted) break;
+    //         await sleep(3, 6);
+    //     }
+    //     audios = lastResponse;
+    // }
 
 </script>
 
