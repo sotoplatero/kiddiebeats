@@ -23,15 +23,16 @@
 
     const wait = async () => {
         const startTime = Date.now();
-        let lastResponse: AudioInfo[] = [];
+        audios = form?.audios
+        // let lastResponse: AudioInfo[] = [];
         recording = true
 
         while (Date.now() - startTime < 100000) {
             const audioIds = form?.audios.map( a=>a.id )
             const response = await fetch(`/audio?id=${audioIds}`);
 
-            lastResponse = await response.json()
-            const allCompleted = lastResponse.every(
+            audios = await response.json()
+            const allCompleted = audios.every(
                 audio => audio.status === 'complete'
             );
 
@@ -43,7 +44,7 @@
         }
         
         recording = false
-        audios = lastResponse;
+
     }
 
 
@@ -64,7 +65,8 @@
 </form>
 
 {#if loading} 
-<div class="space-x-2">
+<div class="space-y-4">
+    
     <div class="flex flex-col gap-4 w-52">
         <div class="flex gap-4 items-center">
           <div class="skeleton w-16 h-16 rounded-full shrink-0"></div>
@@ -74,12 +76,24 @@
           </div>
         </div>
     </div>
+
+    <div class="flex flex-col gap-4 w-52">
+        <div class="flex gap-4 items-center">
+          <div class="skeleton w-16 h-16 rounded-full shrink-0"></div>
+          <div class="flex flex-col gap-4">
+            <div class="skeleton h-4 w-20"></div>
+            <div class="skeleton h-4 w-28"></div>
+          </div>
+        </div>
+    </div>    
+
 </div>
     
 {/if}
-{#if form?.audios.length}
+
+{#if audios.length}
 <div class="space-y-4">
-    {#each form?.audios as audio}
+    {#each audios as audio}
         <audio controls src={audio.audio_url}></audio>
     {/each}
 
