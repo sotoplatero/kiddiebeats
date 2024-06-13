@@ -15,17 +15,19 @@
  	const submit = () => {
         loading = true
 		return async ({ result }) => {
-            loading = false
             await applyAction(result);
             wait()
 		};
 	} 
+    $: validAudios = audios?.every( a => a.status === 'streaming' || a.status === 'complete' )
+    $: if(validAudios) {
+        loading = false
+    }
 
     const wait = async () => {
         const startTime = Date.now();
         audios = form?.audios
         // let lastResponse: AudioInfo[] = [];
-        recording = true
 
         while (Date.now() - startTime < 100000) {
             const audioIds = form?.audios.map( a=>a.id )
@@ -42,8 +44,6 @@
 
             await sleep(3, 6);
         }
-        
-        recording = false
 
     }
 
@@ -64,7 +64,7 @@
    
 </form>
 
-{#if loading} 
+{#if loading } 
 <div class="space-y-4">
     
     <div class="flex flex-col gap-4 w-52">
@@ -82,7 +82,7 @@
           <div class="skeleton w-16 h-16 rounded-full shrink-0"></div>
           <div class="flex flex-col gap-4">
             <div class="skeleton h-4 w-20"></div>
-            <div class="skeleton h-4 w-28"></div>
+            <div class="skeleton h-4 w-28"></div> 
           </div>
         </div>
     </div>    
@@ -91,7 +91,7 @@
     
 {/if}
 
-{#if audios.length}
+{#if validAudios}
 <div class="space-y-4">
     {#each audios as audio}
         <audio controls src={audio.audio_url}></audio>

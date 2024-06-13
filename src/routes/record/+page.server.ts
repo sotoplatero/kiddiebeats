@@ -11,7 +11,7 @@ export const actions = {
         const prompt = `Cancion dedicada a una niña/niño ${name} que contenga: ${quotes}`
 
         const instrumental = false
-        const wait_audio = true
+        const wait_audio = false
 
         const audios = await (await sunoApi).generate( prompt, instrumental, wait_audio )
 
