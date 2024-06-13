@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ url  }) => {
 
     const audios = await (await sunoApi).get( ids )
     
-    console.log(audios)
+    // console.log(audios)
 
 	return json(audios)
 };
