@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="navbar-center">
-      <a class="btn btn-ghost text-xl" href="/">KiddieBeats</a>
+      <a class="btn btn-ghost text-xl" href="/"> 🥳 BirthdaySong</a>
     </div>
     <div class="navbar-end">
       <button class="btn btn-ghost btn-circle">
